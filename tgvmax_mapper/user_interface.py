@@ -8,7 +8,7 @@ from tkinter import ttk
 import datetime
 
 from tkcalendar import Calendar
-import webview
+import webbrowser
 import requests
 import pandas as pd
 
@@ -219,13 +219,11 @@ class MainUi:
 
         map_creator = MapCreator(HTML_FILEPATH, CSV_CUT, CSV_COORDS, CSV_RESULT)
         map_creator.generate(user_inputs)
-        webview.create_window(HTML_MAPNAME, HTML_FILEPATH, \
-            min_size=HTML_MIN_SIZE)
         self.button_action.config(text="Lancer la recherche")
         self.button_action.pack(padx=10, pady=10)
         self.root.update()
         del map_creator
-        webview.start(gui='cef', debug=True)
+        webbrowser.open(HTML_FILEPATH)
 
     def checkbox_roundtrip_cb(self):
         """Callback for roundtrip checkbox."""

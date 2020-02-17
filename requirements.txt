@@ -5,4 +5,3 @@ pyjson==1.3.0
 folium==0.10.0
 requests==2.22.0
 tkcalendar==1.5.1
-pywebview==3.0.2
