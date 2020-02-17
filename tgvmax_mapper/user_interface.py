@@ -106,19 +106,19 @@ class LoadingUi:
     def download_data(self, url, chunk_size, csv_path, cols_useless):
         """Download TGVmax possiblities from SNCF open database."""
         response = requests.get(url, stream=True)
-        handle = open(csv_path, "wb")
-        nb_chunks_dl = 0
-        for chunk in response.iter_content(chunk_size=chunk_size):
-            if chunk:  # filter out keep-alive new chunks
-                handle.write(chunk)
-                nb_chunks_dl += 1
-                percent = round(nb_chunks_dl*100/88)
-                print("Wait... "+str(percent)+"%")
-                self.progress["value"] = percent
-                self.progress_label.config(text=str(percent) + " %")
-                self.progress.pack(padx=10, pady=10)
-                self.progress_label.pack(padx=10)
-                self.root.update()
+        with open(csv_path, "wb") as handle:
+            nb_chunks_dl = 0
+            for chunk in response.iter_content(chunk_size=chunk_size):
+                if chunk:  # filter out keep-alive new chunks
+                    handle.write(chunk)
+                    nb_chunks_dl += 1
+                    percent = round(nb_chunks_dl*100/88)
+                    print("Wait... "+str(percent)+"%")
+                    self.progress["value"] = percent
+                    self.progress_label.config(text=str(percent) + " %")
+                    self.progress.pack(padx=10, pady=10)
+                    self.progress_label.pack(padx=10)
+                    self.root.update()
 
         data = pd.read_csv(csv_path, sep=';')
         data = data[data[DISPO_TGVMAX] == 'OUI']
