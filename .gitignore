@@ -1,1 +1,5 @@
 tgvmax_mapper/__pycache__/
+resources/*.html
+resources/*.json
+resources/cut_tgvs.csv
+resources/result.csv
