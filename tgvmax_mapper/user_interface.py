@@ -1,4 +1,4 @@
-"""Contains graphical user interface object used by TGVmax destinations map"""
+"""Contains graphical user interface object used by TGVmax destinations map."""
 
 import os
 import os.path
@@ -87,10 +87,10 @@ CALENDAR_FONT = "Arial 12"
 
 
 class LoadingUi:
-    """UI loading display for downloading data when the app is starting"""
+    """UI loading display for downloading data when the app is starting."""
 
     def __init__(self):
-        """Init loadingUI if timestamp is outdated"""
+        """Init loadingUI if timestamp is outdated."""
         self.time_keeper = TimeKeeper(UPDT_TMS_PATH, UPDT_DELAY_S)
         if not self.time_keeper.is_tms_outdated():
             self.update_needed = False
@@ -104,7 +104,7 @@ class LoadingUi:
         self.progress_label = Label(self.root)
 
     def download_data(self, url, chunk_size, csv_path, cols_useless):
-        """Download TGVmax possiblities from SNCF open database"""
+        """Download TGVmax possiblities from SNCF open database."""
         response = requests.get(url, stream=True)
         handle = open(csv_path, "wb")
         nb_chunks_dl = 0
@@ -128,7 +128,7 @@ class LoadingUi:
         data.to_csv(csv_path)
 
     def start_data_updt_cb(self):
-        """Start data update"""
+        """Start data update."""
         self.button_action.pack_forget()
         self.progress.pack(padx=10, pady=10)
         self.progress_label.pack(padx=10)
@@ -138,7 +138,7 @@ class LoadingUi:
         self.root.destroy()
 
     def config(self):
-        """Configure loadingUI elements"""
+        """Configure loadingUI elements."""
         self.root.title(APP_TITLE)
         self.label.config( \
             text="Les données SNCF locales datent de plus de 12 heures")
@@ -149,7 +149,7 @@ class LoadingUi:
         self.progress_label.config(text="0 %")
 
     def launch(self):
-        """Launch loadingUI"""
+        """Launch loadingUI."""
         if not self.update_needed:
             return
         self.config()
@@ -159,7 +159,7 @@ class LoadingUi:
 
 
 class MainUi:
-    """Graphical user interface"""
+    """Graphical user interface."""
 
     def __init__(self):
         """Initialise UI elements with their parents"""
@@ -197,7 +197,7 @@ class MainUi:
         self.roundtrip_choice = None
 
     def search_cb(self):
-        """Callback for search button"""
+        """Callback for search button."""
         self.button_action.config(text="CHARGEMENT ...")
         self.button_action.pack(padx=10, pady=10)
         self.root.update()
@@ -228,26 +228,25 @@ class MainUi:
         webview.start(gui='cef', debug=True)
 
     def checkbox_roundtrip_cb(self):
-        """Callback for roundtrip checkbox"""
+        """Callback for roundtrip checkbox."""
         self.roundtrip_choice = True
         self.label_middle_calendar.pack(side=LEFT, padx=10)
         self.frame2_2.pack(side=RIGHT)
 
     def checkbox_oneway_cb(self):
-        """Callback for oneway checkbox"""
+        """Callback for oneway checkbox."""
         self.roundtrip_choice = False
         self.label_middle_calendar.pack_forget()
         self.frame2_2.pack_forget()
 
     def config_root(self):
-        """Configure root graphical window"""
+        """Configure root graphical window."""
         self.root.title(APP_TITLE)
         self.root.geometry(str(max(800, round(self.width/3))) + \
            "x" + str(round(self.height*0.8)))
-#self.root.geometry("500x500")
 
     def config_elements(self):
-        """Main configurations of UI elements"""
+        """Main configurations of UI elements."""
         self.label_mode.configure(text=LABELS[MODE])
         self.label_city.configure(text=LABELS[CITY])
         self.checkbox_oneway.configure(text="Aller simple", \
@@ -295,7 +294,7 @@ class MainUi:
             command=self.search_cb)
 
     def config_background(self):
-        """Configure elements background color"""
+        """Configure elements background color."""
         self.root.configure(bg=BG_COLOR)
         self.frame1.configure(bg=BG_COLOR)
         self.frame2.configure(bg=BG_COLOR)
@@ -314,7 +313,7 @@ class MainUi:
         self.label_middle_calendar.configure(bg="green")
 
     def config_foreground(self):
-        """Configure elements foreground color"""
+        """Configure elements foreground color."""
         self.label_mode.configure(fg=FG_COLOR)
         self.label_city.configure(fg=FG_COLOR)
         self.label_middle_calendar.configure(fg=FG_COLOR)
@@ -326,13 +325,13 @@ class MainUi:
         self.label_hour_return_max.configure(fg=FG_COLOR)
 
     def config_border(self):
-        """Configure frame borders"""
+        """Configure frame borders."""
         self.frame1.configure(borderwidth=2)
         self.frame2.configure(borderwidth=2)
         self.frame3.configure(borderwidth=0)
 
     def config_relief(self):
-        """Configure frame relief"""
+        """Configure frame relief."""
         self.frame1.configure(relief=RELIEF_TYPE)
         self.frame2.configure(relief=RELIEF_TYPE)
         self.frame3.configure(relief=RELIEF_TYPE)
@@ -340,7 +339,7 @@ class MainUi:
         self.frame2_2.configure(relief=RELIEF_TYPE)
 
     def config_font(self):
-        """Configure texts font"""
+        """Configure texts font."""
         self.label_mode.configure(font=PARAM_FONT)
         self.label_city.configure(font=PARAM_FONT)
         self.label_middle_calendar.configure(font=PARAM_FONT)
@@ -354,7 +353,7 @@ class MainUi:
         self.calendar_return.configure(font=CALENDAR_FONT)
 
     def configure(self):
-        """Call configuring functions"""
+        """Call configuring functions."""
         self.config_root()
         self.config_elements()
         self.config_background()
@@ -364,7 +363,7 @@ class MainUi:
         self.config_font()
 
     def pack(self):
-        """Pack elements"""
+        """Pack elements."""
         self.frame1.pack(padx=10, pady=10)
         self.frame2.pack(padx=10, pady=10)
         self.frame3.pack(padx=10, pady=10)
@@ -396,5 +395,5 @@ class MainUi:
         self.button_action.pack(padx=10, pady=10)
 
     def run(self):
-        """Run the graphical interface loop"""
+        """Run the graphical interface loop."""
         self.root.mainloop()

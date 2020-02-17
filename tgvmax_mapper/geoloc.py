@@ -1,4 +1,4 @@
-"""Manage cities geolocalisation coordinates"""
+"""Manage cities geolocalisation coordinates."""
 
 import os
 import time
@@ -12,12 +12,13 @@ class GeolocUpdater:
     """Fill the CSV file with associating a city with its GPS coordinates"""
 
     def __init__(self, csv_src, csv_geoloc_temp, csv_dest):
+        """Init the cities geolocalisation updater."""
         self.csv_src = csv_src
         self.csv_geoloc_temp = csv_geoloc_temp
         self.csv_dest = csv_dest
 
     def get_explicit_name(dest):
-        """Get explicit names for some destinations"""
+        """Get explicit names for some destinations."""
         if dest == "PARIS (intramuros)":
             return "PARIS"
         if dest == "CORBIERES VIERZON VILLE":
@@ -45,12 +46,12 @@ class GeolocUpdater:
         return dest
 
     def get_dest_list(csv_src):
-        """Get destinations list"""
+        """Get destinations list."""
         df_src = pd.read_csv(csv_src)
         return GeolocUpdater.get_unique_destinations(df_src)
 
     def get_unique_destinations(df_src):
-        """Get the list of unique destinations (without duplicatas)"""
+        """Get the list of unique destinations (without duplicatas)."""
         destinations = []
         for dest in df_src["Destination"]:
             found = False
@@ -64,7 +65,7 @@ class GeolocUpdater:
         return destinations
 
     def generate(self):
-        """Get GPS coordinates for each city"""
+        """Get GPS coordinates for each city."""
         destinations = GeolocUpdater.get_dest_list(self.csv_src)
 
         dataframe = pd.DataFrame(data={"CITY": destinations})

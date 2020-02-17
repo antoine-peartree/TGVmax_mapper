@@ -1,4 +1,4 @@
-"""Create TGVmax destinations html map with given user infos"""
+"""Create TGVmax destinations html map with given user infos."""
 
 import gc
 
@@ -16,7 +16,7 @@ HTML_DEFAULT_ZOOM = 4
 HTML_TILES = "Stamen Terrain"
 
 class DataProcess:
-    """Methods used for data processing"""
+    """Methods used for data processing."""
 
     def __init__(self, csv_cut_path, csv_results_path):
         """Init data process csv paths"""
@@ -24,7 +24,7 @@ class DataProcess:
         self.csv_results_path = csv_results_path
 
     def convert_date(self, date_in):
-        """Add missing zeroes for getting the correct date format"""
+        """Add missing zeroes for getting the correct date format."""
         str_year = str(date_in.year)
         str_month = str(date_in.month)
         str_day = str(date_in.day)
@@ -35,7 +35,7 @@ class DataProcess:
         return str_year + "-" + str_month + "-" + str_day
 
     def datetime_limit(self, datafrm, time_infos):
-        """Drop journeys out of the specified date and time"""
+        """Drop journeys out of the specified date and time."""
         datafrm = datafrm[datafrm[DATE] == time_infos["date"]]
         datafrm['int'] = int(time_infos["minh"])
         datafrm = datafrm[list(map(int, \
@@ -47,7 +47,7 @@ class DataProcess:
         return datafrm
 
     def get_journeys(self, depart_city, time_infos, column_from, column_to):
-        """Calculate possibilities linked with the departure city"""
+        """Calculate possibilities linked with the departure city."""
         datafrm = pd.read_csv(self.csv_cut_path)
         del datafrm['Unnamed: 0']
 
@@ -57,7 +57,7 @@ class DataProcess:
         return datafrm
 
     def delete_oneway(self, dataframe, column1, column2):
-        """Delete lines with first column cities missing into 2nd column"""
+        """Delete lines with first column cities missing into 2nd column."""
         for dest in column1:
             found = False
             for origin in column2:
@@ -70,7 +70,7 @@ class DataProcess:
         return dataframe
 
     def keep_only_round_trips(self, dataframe):
-        """Delete one-way journeys"""
+        """Delete one-way journeys."""
         dataframe = self.delete_oneway(dataframe, \
             dataframe[DESTINATION], dataframe[ORIGINE])
         dataframe = self.delete_oneway(dataframe, \
@@ -78,7 +78,7 @@ class DataProcess:
         return dataframe
 
     def sort_journeys(self, dataframe):
-        """Sort journeys by destination first, then date and finally hours"""
+        """Sort journeys by destination first, then date and finally hours."""
         dataframe['hour_diz'] = dataframe[DEPART_TIME].str.get(-5)
         dataframe['hour_uni'] = dataframe[DEPART_TIME].str.get(-4)
         dataframe = dataframe.sort_values(by=['CommonDest', \
@@ -90,10 +90,11 @@ class DataProcess:
 
 
 class MapCreator:
-    """Create Destinations map within user entries"""
+    """Create Destinations map within user entries."""
 
     def __init__(self, html_filepath, csv_cut_path, csv_coord_path, \
             csv_result_path):
+        """Init the map creator with filepaths and DataProcess object."""
         pd.set_option('mode.chained_assignment', None)
         self.html_filepath = html_filepath
         self.csv_cut_path = csv_cut_path
@@ -102,7 +103,7 @@ class MapCreator:
         self.data_process = DataProcess(csv_cut_path, csv_result_path)
 
     def retrieve_geoloc(self, dest, dataframe, df_coord, row):
-        """Retrieve a city geolocalisation from the coordinates CSV"""
+        """Retrieve a city geolocalisation from the coordinates CSV."""
         list_lat = df_coord[LAT]
         list_lon = df_coord[LON]
         found = False
@@ -120,7 +121,7 @@ class MapCreator:
         return dataframe
 
     def add_geoloc(self, depart_city):
-        """Add geolocalisation informations for each destination"""
+        """Add geolocalisation informations for each destination."""
         dataframe = pd.read_csv(self.csv_result_path)
         df_coord = pd.read_csv(self.csv_coord_path)
 
@@ -136,7 +137,7 @@ class MapCreator:
         dataframe.to_csv(self.csv_result_path)
 
     def get_origine_geoloc(self, origine):
-        """Get origine city GPS coordinates"""
+        """Get origine city GPS coordinates."""
         df_coord = pd.read_csv(self.csv_coord_path)
         lat, lon = 0.0, 0.0
         row_coord = 0
@@ -150,14 +151,14 @@ class MapCreator:
         return [lat, lon]
 
     def concat_travel_infos(self, dest, d_depart, h_depart, d_return, h_return):
-        """Concatenate travel infos"""
+        """Concatenate travel infos."""
         if (d_return and h_return):
             return dest + " -- Aller le " + d_depart + " à " + h_depart + \
                 " -- Retour le " + d_return + " à " + h_return
         return dest + " -- Aller le " + d_depart + " à " + h_depart
 
     def display(self, origin, roundtrip):
-        """Display results onto an HTML geographic map"""
+        """Display results onto an HTML geographic map."""
         dataframe = pd.read_csv(self.csv_result_path)
         depart_times = dataframe[DEPART_TIME]
 
@@ -215,7 +216,7 @@ class MapCreator:
         destmap.save(self.html_filepath)
 
     def generate(self, user_entries):
-        """Generate destinations map and save it into HTML format"""
+        """Generate destinations map and save it into HTML format."""
         mode_roundtrip = user_entries["mode"]
         depart_city = user_entries["origin_city"]
 

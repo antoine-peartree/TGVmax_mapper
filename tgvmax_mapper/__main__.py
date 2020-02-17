@@ -1,4 +1,4 @@
-"""Entry point to TGVmax destinations map UI"""
+"""Entry point to TGVmax destinations map UI."""
 
 import sys
 
