@@ -52,6 +52,7 @@ class DataProcess:
         del datafrm['Unnamed: 0']
 
         datafrm = self.datetime_limit(datafrm, time_infos)
+        datafrm = datafrm[datafrm['Disponibilité de places MAX JEUNE et MAX SENIOR'] == 'OUI']
         datafrm = datafrm[datafrm[column_from] == depart_city]
         datafrm["CommonDest"] = datafrm[column_to]
         return datafrm
