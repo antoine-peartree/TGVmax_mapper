@@ -48,8 +48,7 @@ class DataProcess:
 
     def get_journeys(self, depart_city, time_infos, column_from, column_to):
         """Calculate possibilities linked with the departure city."""
-        datafrm = pd.read_csv(self.csv_cut_path)
-        del datafrm['Unnamed: 0']
+        datafrm = pd.read_csv(self.csv_cut_path, sep=';')
 
         datafrm = self.datetime_limit(datafrm, time_infos)
         datafrm = datafrm[datafrm['Disponibilité de places MAX JEUNE et MAX SENIOR'] == 'OUI']

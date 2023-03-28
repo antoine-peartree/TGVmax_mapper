@@ -47,7 +47,7 @@ class GeolocUpdater:
 
     def get_dest_list(csv_src):
         """Get destinations list."""
-        df_src = pd.read_csv(csv_src)
+        df_src = pd.read_csv(csv_src, sep=';')
         return GeolocUpdater.get_unique_destinations(df_src)
 
     def get_unique_destinations(df_src):
