@@ -3,3 +3,4 @@ resources/*.html
 resources/*.json
 resources/cut_tgvs.csv
 resources/result.csv
+env
