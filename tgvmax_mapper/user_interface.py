@@ -223,7 +223,7 @@ class MainUi:
         self.button_action.pack(padx=10, pady=10)
         self.root.update()
         del map_creator
-        webbrowser.open(HTML_FILEPATH)
+        webbrowser.get('open -a /Applications/Google\ Chrome.app %s').open(HTML_FILEPATH)
 
     def checkbox_roundtrip_cb(self):
         """Callback for roundtrip checkbox."""
