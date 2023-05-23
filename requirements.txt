@@ -1,5 +1,5 @@
 folium==0.14.0
 geopy==2.3.0
 pandas==1.5.3
-requests==2.28.2
+requests==2.31.0
 tkcalendar==1.6.1
